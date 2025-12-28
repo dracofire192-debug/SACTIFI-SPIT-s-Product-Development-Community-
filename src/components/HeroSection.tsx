@@ -3,6 +3,7 @@ import { ArrowDown, Rocket, Zap, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ParticleGrid } from './ParticleGrid';
 import { BinaryOverlay } from './BinaryOverlay';
+import { TechSphere } from './TechSphere';
 
 const stats = [
   { value: '10+', label: 'Projects' },
@@ -25,6 +26,9 @@ export const HeroSection = () => {
       {/* Radial glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/10 rounded-full blur-[120px]" />
       <div className="absolute top-1/4 right-1/4 w-[400px] h-[400px] bg-accent/10 rounded-full blur-[100px]" />
+      
+      {/* 3D Tech Sphere */}
+      <TechSphere />
 
       {/* Floating 3D Elements */}
       <motion.div
