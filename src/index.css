@@ -341,3 +341,103 @@ html {
     background-position: 200% 0;
   }
 }
+
+/* Metallic VIBGYOR border animation */
+@property --gradient-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes vibgyor-rotate {
+  0% {
+    --gradient-angle: 0deg;
+  }
+  100% {
+    --gradient-angle: 360deg;
+  }
+}
+
+.vibgyor-border {
+  --gradient-angle: 0deg;
+  background: conic-gradient(
+    from var(--gradient-angle),
+    #ff0000 0deg,
+    #ff4500 25deg,
+    #ff8c00 50deg,
+    #ffd700 75deg,
+    #ffff00 90deg,
+    #9acd32 115deg,
+    #00ff00 140deg,
+    #00ced1 165deg,
+    #1e90ff 190deg,
+    #4169e1 215deg,
+    #8a2be2 240deg,
+    #9400d3 265deg,
+    #ff1493 290deg,
+    #ff69b4 315deg,
+    #ff0000 360deg
+  );
+  animation: vibgyor-rotate 3s linear infinite;
+}
+
+.metallic-border-effect {
+  position: relative;
+  isolation: isolate;
+}
+
+.metallic-border-effect::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--gradient-angle, 0deg),
+    rgba(255, 0, 0, 0.6) 0deg,
+    rgba(255, 165, 0, 0.6) 60deg,
+    rgba(255, 255, 0, 0.6) 120deg,
+    rgba(0, 255, 0, 0.6) 180deg,
+    rgba(0, 0, 255, 0.6) 240deg,
+    rgba(139, 0, 255, 0.6) 300deg,
+    rgba(255, 0, 0, 0.6) 360deg
+  );
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+
+.metallic-border-effect:hover::before {
+  opacity: 1;
+  animation: vibgyor-rotate 3s linear infinite;
+}
+
+/* Metallic shine effect */
+.metallic-shine {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 40%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0.1) 60%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 200% 200%;
+  animation: metallic-shine-move 3s ease-in-out infinite;
+}
+
+@keyframes metallic-shine-move {
+  0% {
+    background-position: 200% 200%;
+  }
+  100% {
+    background-position: -200% -200%;
+  }
+}

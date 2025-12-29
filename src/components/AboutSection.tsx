@@ -96,22 +96,22 @@ export const AboutSection = () => {
             <StaggerItem key={feature.title}>
               <motion.div
                 className="group relative h-full"
-                whileHover={{ y: -8 }}
-                transition={{ type: "spring", stiffness: 300 }}
+                whileHover={{ y: -8, scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
               >
                 <InteractiveCard className="h-full">
-                  <div className="card-glow rounded-2xl p-8 bg-secondary/50 border border-border h-full group-hover:border-primary/50 transition-all duration-300">
+                  <div className="relative rounded-2xl p-8 bg-secondary/50 h-full transition-all duration-500">
                     <motion.div 
-                      className="w-14 h-14 rounded-xl bg-primary/10 border border-primary/30 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors"
+                      className="w-14 h-14 rounded-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 flex items-center justify-center mb-6 group-hover:border-white/40 transition-all duration-300 backdrop-blur-sm shadow-lg"
                       whileHover={{ rotate: 360, scale: 1.1 }}
                       transition={{ duration: 0.5 }}
                     >
-                      <feature.icon className="w-7 h-7 text-primary" />
+                      <feature.icon className="w-7 h-7 text-white/90" />
                     </motion.div>
-                    <h3 className="font-display text-xl font-semibold mb-3 text-foreground group-hover:text-primary transition-colors">
+                    <h3 className="font-display text-xl font-semibold mb-3 text-foreground group-hover:text-white transition-colors duration-300">
                       {feature.title}
                     </h3>
-                    <p className="text-muted-foreground leading-relaxed">
+                    <p className="text-muted-foreground leading-relaxed group-hover:text-foreground/80 transition-colors duration-300">
                       {feature.description}
                     </p>
                   </div>

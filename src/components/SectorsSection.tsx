@@ -111,26 +111,26 @@ export const SectorsSection = () => {
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
                 whileHover={{ y: -10, scale: 1.02 }}
-                transition={{ type: "spring", stiffness: 300 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
               >
                 <InteractiveCard className="h-full">
                   <motion.div 
-                    className={`rounded-2xl p-6 bg-card border ${sector.borderColor} h-full transition-all duration-300`}
+                    className="rounded-2xl p-6 bg-secondary/50 h-full transition-all duration-500"
                     animate={{
                       boxShadow: hoveredIndex === index ? sector.hoverGlow : '0 0 0 transparent',
                     }}
                   >
                     <motion.div 
-                      className={`w-12 h-12 rounded-xl ${sector.bgColor} border ${sector.borderColor} flex items-center justify-center mb-4`}
+                      className="w-12 h-12 rounded-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 flex items-center justify-center mb-4 group-hover:border-white/40 transition-all duration-300 backdrop-blur-sm shadow-lg"
                       whileHover={{ rotate: 360, scale: 1.15 }}
                       transition={{ duration: 0.6 }}
                     >
-                      <sector.icon className={`w-6 h-6 ${sector.color}`} />
+                      <sector.icon className={`w-6 h-6 ${sector.color} group-hover:text-white transition-colors`} />
                     </motion.div>
-                    <h3 className="font-display text-lg font-semibold mb-2 text-foreground group-hover:text-primary transition-colors">
+                    <h3 className="font-display text-lg font-semibold mb-2 text-foreground group-hover:text-white transition-colors duration-300">
                       {sector.title}
                     </h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">
+                    <p className="text-muted-foreground text-sm leading-relaxed group-hover:text-foreground/80 transition-colors duration-300">
                       {sector.description}
                     </p>
                   </motion.div>

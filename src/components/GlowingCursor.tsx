@@ -26,14 +26,14 @@ export const GlowingCursor = () => {
 
   return (
     <motion.div
-      className="fixed pointer-events-none z-[60] w-[400px] h-[400px] rounded-full opacity-30"
+      className="fixed pointer-events-none z-[60] w-[200px] h-[200px] rounded-full"
       style={{
-        background: 'radial-gradient(circle, hsl(var(--primary) / 0.3) 0%, transparent 70%)',
-        left: mousePosition.x - 200,
-        top: mousePosition.y - 200,
+        background: 'radial-gradient(circle, hsl(var(--primary) / 0.12) 0%, transparent 70%)',
+        left: mousePosition.x - 100,
+        top: mousePosition.y - 100,
       }}
       animate={{
-        opacity: isVisible ? 0.3 : 0,
+        opacity: isVisible ? 0.15 : 0,
         scale: isVisible ? 1 : 0.8,
       }}
       transition={{ duration: 0.2 }}

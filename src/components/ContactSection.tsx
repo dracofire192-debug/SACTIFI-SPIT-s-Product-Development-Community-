@@ -66,8 +66,8 @@ export const ContactSection = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <InteractiveCard className="h-full">
-              <div className="card-glow rounded-2xl p-8 bg-card border border-border h-full">
-                <h3 className="font-display text-xl font-semibold mb-6">Send us a message</h3>
+              <div className="rounded-2xl p-8 bg-secondary/50 h-full transition-all duration-500">
+                <h3 className="font-display text-xl font-semibold mb-6 group-hover:text-white transition-colors">Send us a message</h3>
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid sm:grid-cols-2 gap-4">
                     <motion.div whileFocus={{ scale: 1.02 }}>
@@ -144,8 +144,8 @@ export const ContactSection = () => {
             className="space-y-8"
           >
             <InteractiveCard>
-              <div className="card-glow rounded-2xl p-8 bg-card border border-border">
-                <h3 className="font-display text-xl font-semibold mb-6">Contact Information</h3>
+              <div className="rounded-2xl p-8 bg-secondary/50 transition-all duration-500">
+                <h3 className="font-display text-xl font-semibold mb-6 group-hover:text-white transition-colors">Contact Information</h3>
                 <div className="space-y-6">
                   {[
                     { icon: MapPin, title: 'Location', content: ['Sardar Patel Institute of Technology', 'Andheri West, Mumbai 400058'] },
@@ -154,21 +154,21 @@ export const ContactSection = () => {
                   ].map((item, index) => (
                     <motion.div 
                       key={item.title}
-                      className="flex items-start gap-4 group cursor-default"
+                      className="flex items-start gap-4 group/item cursor-default"
                       whileHover={{ x: 10 }}
                       transition={{ type: "spring", stiffness: 300 }}
                     >
                       <motion.div 
-                        className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/30 flex items-center justify-center shrink-0"
+                        className="w-12 h-12 rounded-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 flex items-center justify-center shrink-0 group-hover/item:border-white/40 transition-all duration-300 backdrop-blur-sm shadow-lg"
                         whileHover={{ rotate: 360, scale: 1.1 }}
                         transition={{ duration: 0.5 }}
                       >
-                        <item.icon className="w-5 h-5 text-primary" />
+                        <item.icon className="w-5 h-5 text-white/90" />
                       </motion.div>
                       <div>
-                        <h4 className="font-medium text-foreground mb-1 group-hover:text-primary transition-colors">{item.title}</h4>
+                        <h4 className="font-medium text-foreground mb-1 group-hover/item:text-white transition-colors">{item.title}</h4>
                         {item.content.map((line, i) => (
-                          <p key={i} className="text-muted-foreground text-sm">{line}</p>
+                          <p key={i} className="text-muted-foreground text-sm group-hover/item:text-foreground/80 transition-colors">{line}</p>
                         ))}
                       </div>
                     </motion.div>
@@ -179,8 +179,8 @@ export const ContactSection = () => {
 
             {/* Social Links */}
             <InteractiveCard>
-              <div className="card-glow rounded-2xl p-8 bg-card border border-border">
-                <h3 className="font-display text-xl font-semibold mb-6">Connect With Us</h3>
+              <div className="rounded-2xl p-8 bg-secondary/50 transition-all duration-500">
+                <h3 className="font-display text-xl font-semibold mb-6 group-hover:text-white transition-colors">Connect With Us</h3>
                 <div className="flex gap-4">
                   {socialLinks.map((social) => (
                     <MagneticButton key={social.label}>
