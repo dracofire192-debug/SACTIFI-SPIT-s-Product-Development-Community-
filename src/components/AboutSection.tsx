@@ -2,6 +2,8 @@ import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Target, Eye, Lightbulb, Users } from 'lucide-react';
+import { LaptopDisplay } from './LaptopDisplay';
+import { InteractiveCard } from './InteractiveCard';
 
 const features = [
   {
@@ -56,6 +58,11 @@ export const AboutSection = () => {
           </p>
         </motion.div>
 
+        {/* Laptop Display with 3D Robot */}
+        <div className="mb-20">
+          <LaptopDisplay />
+        </div>
+
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {features.map((feature, index) => (
             <motion.div
@@ -65,17 +72,23 @@ export const AboutSection = () => {
               transition={{ duration: 0.6, delay: index * 0.15 }}
               className="group relative"
             >
-              <div className="card-glow rounded-2xl p-8 bg-secondary/50 border border-border h-full">
-                <div className="w-14 h-14 rounded-xl bg-primary/10 border border-primary/30 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
-                  <feature.icon className="w-7 h-7 text-primary" />
+              <InteractiveCard className="h-full">
+                <div className="card-glow rounded-2xl p-8 bg-secondary/50 border border-border h-full group-hover:border-primary/50 transition-all duration-300">
+                  <motion.div 
+                    className="w-14 h-14 rounded-xl bg-primary/10 border border-primary/30 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors"
+                    whileHover={{ rotate: 360, scale: 1.1 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <feature.icon className="w-7 h-7 text-primary" />
+                  </motion.div>
+                  <h3 className="font-display text-xl font-semibold mb-3 text-foreground group-hover:text-primary transition-colors">
+                    {feature.title}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    {feature.description}
+                  </p>
                 </div>
-                <h3 className="font-display text-xl font-semibold mb-3 text-foreground">
-                  {feature.title}
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  {feature.description}
-                </p>
-              </div>
+              </InteractiveCard>
             </motion.div>
           ))}
         </div>

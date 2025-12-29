@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { ParticleGrid } from './ParticleGrid';
 import { BinaryOverlay } from './BinaryOverlay';
 import { TechSphere } from './TechSphere';
+import { MagneticButton } from './MagneticButton';
 
 const stats = [
   { value: '10+', label: 'Projects' },
@@ -30,13 +31,14 @@ export const HeroSection = () => {
       {/* 3D Tech Sphere */}
       <TechSphere />
 
-      {/* Floating 3D Elements */}
+      {/* Floating 3D Elements with enhanced interactivity */}
       <motion.div
         animate={{ y: [-20, 20, -20], rotate: [0, 5, -5, 0] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         className="absolute top-32 left-[10%] hidden lg:block"
+        whileHover={{ scale: 1.2, rotate: 15 }}
       >
-        <div className="w-20 h-20 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 border border-primary/30 flex items-center justify-center backdrop-blur-sm">
+        <div className="w-20 h-20 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 border border-primary/30 flex items-center justify-center backdrop-blur-sm cursor-pointer hover:border-primary/60 transition-all duration-300 hover:shadow-[0_0_30px_hsl(var(--primary)/0.5)]">
           <Rocket className="w-10 h-10 text-primary" />
         </div>
       </motion.div>
@@ -45,8 +47,9 @@ export const HeroSection = () => {
         animate={{ y: [20, -20, 20], rotate: [0, -5, 5, 0] }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
         className="absolute bottom-40 right-[15%] hidden lg:block"
+        whileHover={{ scale: 1.2, rotate: -15 }}
       >
-        <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-accent/20 to-neon-green/20 border border-accent/30 flex items-center justify-center backdrop-blur-sm">
+        <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-accent/20 to-neon-green/20 border border-accent/30 flex items-center justify-center backdrop-blur-sm cursor-pointer hover:border-accent/60 transition-all duration-300 hover:shadow-[0_0_30px_hsl(var(--accent)/0.5)]">
           <Zap className="w-8 h-8 text-accent" />
         </div>
       </motion.div>
@@ -55,8 +58,9 @@ export const HeroSection = () => {
         animate={{ y: [-15, 15, -15], rotate: [0, 10, -10, 0] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
         className="absolute top-1/3 right-[8%] hidden lg:block"
+        whileHover={{ scale: 1.2, rotate: 20 }}
       >
-        <div className="w-14 h-14 rounded-full bg-gradient-to-br from-neon-green/20 to-primary/20 border border-neon-green/30 flex items-center justify-center backdrop-blur-sm">
+        <div className="w-14 h-14 rounded-full bg-gradient-to-br from-neon-green/20 to-primary/20 border border-neon-green/30 flex items-center justify-center backdrop-blur-sm cursor-pointer hover:border-neon-green/60 transition-all duration-300 hover:shadow-[0_0_30px_hsl(150_100%_50%/0.5)]">
           <Globe className="w-7 h-7 text-neon-green" />
         </div>
       </motion.div>
@@ -68,9 +72,12 @@ export const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <span className="inline-block px-4 py-2 mb-6 text-sm font-medium text-primary border border-primary/30 rounded-full bg-primary/10">
+          <motion.span 
+            className="inline-block px-4 py-2 mb-6 text-sm font-medium text-primary border border-primary/30 rounded-full bg-primary/10 cursor-default"
+            whileHover={{ scale: 1.05, borderColor: 'hsl(var(--primary))' }}
+          >
             SPIT's Product Development Ecosystem
-          </span>
+          </motion.span>
         </motion.div>
 
         <motion.h1
@@ -79,7 +86,13 @@ export const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="font-display text-5xl md:text-7xl lg:text-8xl font-bold mb-6"
         >
-          <span className="gradient-text">SACTIFI</span>
+          <motion.span 
+            className="gradient-text inline-block"
+            whileHover={{ scale: 1.02 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
+            SACTIFI
+          </motion.span>
         </motion.h1>
 
         <motion.p
@@ -108,15 +121,19 @@ export const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
         >
-          <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 font-display text-sm tracking-wide px-8">
-            Explore Our Projects
-          </Button>
-          <Button size="lg" variant="outline" className="border-primary/50 text-primary hover:bg-primary/10 font-display text-sm tracking-wide px-8">
-            Partner With Us
-          </Button>
+          <MagneticButton>
+            <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 font-display text-sm tracking-wide px-8 transition-all duration-300 hover:shadow-[0_0_30px_hsl(var(--primary)/0.5)]">
+              Explore Our Projects
+            </Button>
+          </MagneticButton>
+          <MagneticButton>
+            <Button size="lg" variant="outline" className="border-primary/50 text-primary hover:bg-primary/10 font-display text-sm tracking-wide px-8 transition-all duration-300 hover:shadow-[0_0_20px_hsl(var(--primary)/0.3)]">
+              Partner With Us
+            </Button>
+          </MagneticButton>
         </motion.div>
 
-        {/* Stats */}
+        {/* Stats with enhanced interactivity */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -124,17 +141,22 @@ export const HeroSection = () => {
           className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto"
         >
           {stats.map((stat, index) => (
-            <div key={stat.label} className="text-center">
+            <motion.div 
+              key={stat.label} 
+              className="text-center cursor-default group"
+              whileHover={{ scale: 1.1, y: -5 }}
+              transition={{ type: "spring", stiffness: 400 }}
+            >
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ duration: 0.5, delay: 1 + index * 0.1 }}
-                className="text-3xl md:text-4xl font-display font-bold text-primary mb-1"
+                className="text-3xl md:text-4xl font-display font-bold text-primary mb-1 group-hover:text-glow transition-all duration-300"
               >
                 {stat.value}
               </motion.div>
-              <div className="text-sm text-muted-foreground">{stat.label}</div>
-            </div>
+              <div className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">{stat.label}</div>
+            </motion.div>
           ))}
         </motion.div>
       </div>
@@ -145,10 +167,14 @@ export const HeroSection = () => {
         transition={{ duration: 2, repeat: Infinity }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2"
       >
-        <a href="#about" className="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+        <motion.a 
+          href="#about" 
+          className="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+          whileHover={{ scale: 1.1 }}
+        >
           <span className="text-xs uppercase tracking-widest">Scroll</span>
           <ArrowDown size={20} />
-        </a>
+        </motion.a>
       </motion.div>
     </section>
   );
