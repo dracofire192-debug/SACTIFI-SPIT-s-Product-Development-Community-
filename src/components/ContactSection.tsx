@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
+import { InteractiveCard } from './InteractiveCard';
+import { MagneticButton } from './MagneticButton';
 
 export const ContactSection = () => {
   const ref = useRef(null);
@@ -15,12 +17,25 @@ export const ContactSection = () => {
     subject: '',
     message: '',
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
     toast.success('Message sent successfully! We\'ll get back to you soon.');
     setFormData({ name: '', email: '', subject: '', message: '' });
+    setIsSubmitting(false);
   };
+
+  const socialLinks = [
+    { icon: Linkedin, href: '#', label: 'LinkedIn' },
+    { icon: Github, href: '#', label: 'GitHub' },
+    { icon: Twitter, href: '#', label: 'Twitter' },
+  ];
 
   return (
     <section id="contact" className="relative py-32 overflow-hidden">
@@ -50,57 +65,75 @@ export const ContactSection = () => {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <div className="card-glow rounded-2xl p-8 bg-card border border-border">
-              <h3 className="font-display text-xl font-semibold mb-6">Send us a message</h3>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid sm:grid-cols-2 gap-4">
+            <InteractiveCard className="h-full">
+              <div className="card-glow rounded-2xl p-8 bg-card border border-border h-full">
+                <h3 className="font-display text-xl font-semibold mb-6">Send us a message</h3>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <motion.div whileFocus={{ scale: 1.02 }}>
+                      <label className="text-sm font-medium text-muted-foreground mb-2 block">Name</label>
+                      <Input
+                        placeholder="Your name"
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        className="bg-secondary/50 border-border focus:border-primary transition-all duration-300 focus:shadow-[0_0_20px_hsl(var(--primary)/0.2)]"
+                        required
+                      />
+                    </motion.div>
+                    <div>
+                      <label className="text-sm font-medium text-muted-foreground mb-2 block">Email</label>
+                      <Input
+                        type="email"
+                        placeholder="your@email.com"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        className="bg-secondary/50 border-border focus:border-primary transition-all duration-300 focus:shadow-[0_0_20px_hsl(var(--primary)/0.2)]"
+                        required
+                      />
+                    </div>
+                  </div>
                   <div>
-                    <label className="text-sm font-medium text-muted-foreground mb-2 block">Name</label>
+                    <label className="text-sm font-medium text-muted-foreground mb-2 block">Subject</label>
                     <Input
-                      placeholder="Your name"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="bg-secondary/50 border-border focus:border-primary"
+                      placeholder="What's this about?"
+                      value={formData.subject}
+                      onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                      className="bg-secondary/50 border-border focus:border-primary transition-all duration-300 focus:shadow-[0_0_20px_hsl(var(--primary)/0.2)]"
                       required
                     />
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-muted-foreground mb-2 block">Email</label>
-                    <Input
-                      type="email"
-                      placeholder="your@email.com"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="bg-secondary/50 border-border focus:border-primary"
+                    <label className="text-sm font-medium text-muted-foreground mb-2 block">Message</label>
+                    <Textarea
+                      placeholder="Tell us about your idea or inquiry..."
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      className="bg-secondary/50 border-border focus:border-primary min-h-[150px] transition-all duration-300 focus:shadow-[0_0_20px_hsl(var(--primary)/0.2)]"
                       required
                     />
                   </div>
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-muted-foreground mb-2 block">Subject</label>
-                  <Input
-                    placeholder="What's this about?"
-                    value={formData.subject}
-                    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                    className="bg-secondary/50 border-border focus:border-primary"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-muted-foreground mb-2 block">Message</label>
-                  <Textarea
-                    placeholder="Tell us about your idea or inquiry..."
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="bg-secondary/50 border-border focus:border-primary min-h-[150px]"
-                    required
-                  />
-                </div>
-                <Button type="submit" className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
-                  Send Message <Send className="w-4 h-4 ml-2" />
-                </Button>
-              </form>
-            </div>
+                  <MagneticButton className="w-full">
+                    <Button 
+                      type="submit" 
+                      className="w-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 hover:shadow-[0_0_30px_hsl(var(--primary)/0.5)]"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? (
+                        <motion.div
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                          className="w-5 h-5 border-2 border-primary-foreground border-t-transparent rounded-full"
+                        />
+                      ) : (
+                        <>
+                          Send Message <Send className="w-4 h-4 ml-2" />
+                        </>
+                      )}
+                    </Button>
+                  </MagneticButton>
+                </form>
+              </div>
+            </InteractiveCard>
           </motion.div>
 
           {/* Contact Info */}
@@ -110,57 +143,61 @@ export const ContactSection = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="space-y-8"
           >
-            <div className="card-glow rounded-2xl p-8 bg-card border border-border">
-              <h3 className="font-display text-xl font-semibold mb-6">Contact Information</h3>
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/30 flex items-center justify-center shrink-0">
-                    <MapPin className="w-5 h-5 text-primary" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-foreground mb-1">Location</h4>
-                    <p className="text-muted-foreground text-sm">
-                      Sardar Patel Institute of Technology<br />
-                      Andheri West, Mumbai 400058
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/30 flex items-center justify-center shrink-0">
-                    <Mail className="w-5 h-5 text-primary" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-foreground mb-1">Email</h4>
-                    <p className="text-muted-foreground text-sm">contact@sactifi.in</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/30 flex items-center justify-center shrink-0">
-                    <Phone className="w-5 h-5 text-primary" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-foreground mb-1">Phone</h4>
-                    <p className="text-muted-foreground text-sm">+91 (XXX) XXX-XXXX</p>
-                  </div>
+            <InteractiveCard>
+              <div className="card-glow rounded-2xl p-8 bg-card border border-border">
+                <h3 className="font-display text-xl font-semibold mb-6">Contact Information</h3>
+                <div className="space-y-6">
+                  {[
+                    { icon: MapPin, title: 'Location', content: ['Sardar Patel Institute of Technology', 'Andheri West, Mumbai 400058'] },
+                    { icon: Mail, title: 'Email', content: ['contact@sactifi.in'] },
+                    { icon: Phone, title: 'Phone', content: ['+91 (XXX) XXX-XXXX'] },
+                  ].map((item, index) => (
+                    <motion.div 
+                      key={item.title}
+                      className="flex items-start gap-4 group cursor-default"
+                      whileHover={{ x: 10 }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                    >
+                      <motion.div 
+                        className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/30 flex items-center justify-center shrink-0"
+                        whileHover={{ rotate: 360, scale: 1.1 }}
+                        transition={{ duration: 0.5 }}
+                      >
+                        <item.icon className="w-5 h-5 text-primary" />
+                      </motion.div>
+                      <div>
+                        <h4 className="font-medium text-foreground mb-1 group-hover:text-primary transition-colors">{item.title}</h4>
+                        {item.content.map((line, i) => (
+                          <p key={i} className="text-muted-foreground text-sm">{line}</p>
+                        ))}
+                      </div>
+                    </motion.div>
+                  ))}
                 </div>
               </div>
-            </div>
+            </InteractiveCard>
 
             {/* Social Links */}
-            <div className="card-glow rounded-2xl p-8 bg-card border border-border">
-              <h3 className="font-display text-xl font-semibold mb-6">Connect With Us</h3>
-              <div className="flex gap-4">
-                <a href="#" className="w-12 h-12 rounded-xl bg-secondary/50 border border-border flex items-center justify-center hover:bg-primary/10 hover:border-primary/50 transition-colors">
-                  <Linkedin className="w-5 h-5 text-muted-foreground hover:text-primary" />
-                </a>
-                <a href="#" className="w-12 h-12 rounded-xl bg-secondary/50 border border-border flex items-center justify-center hover:bg-primary/10 hover:border-primary/50 transition-colors">
-                  <Github className="w-5 h-5 text-muted-foreground hover:text-primary" />
-                </a>
-                <a href="#" className="w-12 h-12 rounded-xl bg-secondary/50 border border-border flex items-center justify-center hover:bg-primary/10 hover:border-primary/50 transition-colors">
-                  <Twitter className="w-5 h-5 text-muted-foreground hover:text-primary" />
-                </a>
+            <InteractiveCard>
+              <div className="card-glow rounded-2xl p-8 bg-card border border-border">
+                <h3 className="font-display text-xl font-semibold mb-6">Connect With Us</h3>
+                <div className="flex gap-4">
+                  {socialLinks.map((social) => (
+                    <MagneticButton key={social.label}>
+                      <motion.a 
+                        href={social.href} 
+                        className="w-12 h-12 rounded-xl bg-secondary/50 border border-border flex items-center justify-center hover:bg-primary/10 hover:border-primary/50 transition-all duration-300"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
+                        aria-label={social.label}
+                      >
+                        <social.icon className="w-5 h-5 text-muted-foreground hover:text-primary transition-colors" />
+                      </motion.a>
+                    </MagneticButton>
+                  ))}
+                </div>
               </div>
-            </div>
+            </InteractiveCard>
           </motion.div>
         </div>
       </div>

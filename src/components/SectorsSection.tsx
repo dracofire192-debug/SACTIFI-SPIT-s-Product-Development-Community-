@@ -1,6 +1,7 @@
 import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Leaf, Cpu, Heart, TreePine, Building, TrendingUp } from 'lucide-react';
+import { InteractiveCard } from './InteractiveCard';
 
 const sectors = [
   {
@@ -10,6 +11,7 @@ const sectors = [
     color: 'text-neon-green',
     bgColor: 'bg-neon-green/10',
     borderColor: 'border-neon-green/30',
+    hoverGlow: '0 0 40px hsl(150 100% 50% / 0.3)',
   },
   {
     icon: Cpu,
@@ -18,6 +20,7 @@ const sectors = [
     color: 'text-primary',
     bgColor: 'bg-primary/10',
     borderColor: 'border-primary/30',
+    hoverGlow: '0 0 40px hsl(var(--primary) / 0.3)',
   },
   {
     icon: Heart,
@@ -26,6 +29,7 @@ const sectors = [
     color: 'text-destructive',
     bgColor: 'bg-destructive/10',
     borderColor: 'border-destructive/30',
+    hoverGlow: '0 0 40px hsl(0 84% 60% / 0.3)',
   },
   {
     icon: TreePine,
@@ -34,6 +38,7 @@ const sectors = [
     color: 'text-neon-green',
     bgColor: 'bg-neon-green/10',
     borderColor: 'border-neon-green/30',
+    hoverGlow: '0 0 40px hsl(150 100% 50% / 0.3)',
   },
   {
     icon: Building,
@@ -42,6 +47,7 @@ const sectors = [
     color: 'text-accent',
     bgColor: 'bg-accent/10',
     borderColor: 'border-accent/30',
+    hoverGlow: '0 0 40px hsl(var(--accent) / 0.3)',
   },
   {
     icon: TrendingUp,
@@ -50,12 +56,14 @@ const sectors = [
     color: 'text-primary',
     bgColor: 'bg-primary/10',
     borderColor: 'border-primary/30',
+    hoverGlow: '0 0 40px hsl(var(--primary) / 0.3)',
   },
 ];
 
 export const SectorsSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
     <section id="sectors" className="relative py-32 overflow-hidden">
@@ -86,18 +94,32 @@ export const SectorsSection = () => {
               animate={isInView ? { opacity: 1, scale: 1 } : {}}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="group"
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
             >
-              <div className={`card-glow rounded-2xl p-6 bg-card border ${sector.borderColor} h-full hover:border-opacity-100 transition-all`}>
-                <div className={`w-12 h-12 rounded-xl ${sector.bgColor} border ${sector.borderColor} flex items-center justify-center mb-4`}>
-                  <sector.icon className={`w-6 h-6 ${sector.color}`} />
-                </div>
-                <h3 className="font-display text-lg font-semibold mb-2 text-foreground">
-                  {sector.title}
-                </h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  {sector.description}
-                </p>
-              </div>
+              <InteractiveCard className="h-full">
+                <motion.div 
+                  className={`rounded-2xl p-6 bg-card border ${sector.borderColor} h-full transition-all duration-300`}
+                  animate={{
+                    boxShadow: hoveredIndex === index ? sector.hoverGlow : '0 0 0 transparent',
+                    borderColor: hoveredIndex === index ? 'hsl(var(--primary) / 0.6)' : undefined,
+                  }}
+                >
+                  <motion.div 
+                    className={`w-12 h-12 rounded-xl ${sector.bgColor} border ${sector.borderColor} flex items-center justify-center mb-4`}
+                    whileHover={{ rotate: 360, scale: 1.1 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <sector.icon className={`w-6 h-6 ${sector.color}`} />
+                  </motion.div>
+                  <h3 className="font-display text-lg font-semibold mb-2 text-foreground group-hover:text-primary transition-colors">
+                    {sector.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {sector.description}
+                  </p>
+                </motion.div>
+              </InteractiveCard>
             </motion.div>
           ))}
         </div>

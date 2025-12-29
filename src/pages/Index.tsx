@@ -7,10 +7,12 @@ import { TechStackSection } from '@/components/TechStackSection';
 import { TeamSection } from '@/components/TeamSection';
 import { ContactSection } from '@/components/ContactSection';
 import { Footer } from '@/components/Footer';
+import { GlowingCursor } from '@/components/GlowingCursor';
 
 const Index = () => {
   return (
     <main className="min-h-screen bg-background">
+      <GlowingCursor />
       <Navbar />
       <HeroSection />
       <AboutSection />
