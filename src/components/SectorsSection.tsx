@@ -2,6 +2,7 @@ import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { Leaf, Cpu, Heart, TreePine, Building, TrendingUp } from 'lucide-react';
 import { InteractiveCard } from './InteractiveCard';
+import { ScrollReveal, StaggerContainer, StaggerItem, TextReveal } from './ScrollAnimations';
 
 const sectors = [
   {
@@ -68,61 +69,76 @@ export const SectorsSection = () => {
   return (
     <section id="sectors" className="relative py-32 overflow-hidden">
       <div className="absolute inset-0 bg-background bg-grid" />
-      <div className="absolute top-1/2 right-0 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[150px]" />
+      <motion.div 
+        className="absolute top-1/2 right-0 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[150px]"
+        animate={{ 
+          x: [0, -30, 0],
+          scale: [1, 1.1, 1]
+        }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+      />
 
       <div ref={ref} className="relative z-10 container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <span className="text-primary font-medium text-sm uppercase tracking-widest">Our Impact Areas</span>
+        <ScrollReveal className="text-center mb-16">
+          <motion.span 
+            className="text-primary font-medium text-sm uppercase tracking-widest inline-block"
+            initial={{ opacity: 0, letterSpacing: '0.5em' }}
+            whileInView={{ opacity: 1, letterSpacing: '0.2em' }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            Our Impact Areas
+          </motion.span>
           <h2 className="font-display text-4xl md:text-5xl font-bold mt-4 mb-6">
-            Sectors of <span className="gradient-text">Influence</span>
+            <TextReveal text="Sectors of" delay={0.1} /> <span className="gradient-text"><TextReveal text="Influence" delay={0.3} /></span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
+          <motion.p 
+            className="text-muted-foreground text-lg max-w-3xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
             SACTIFI's influence spans multiple sectors, driven by problem-solving and collaboration to transform India's landscape
-          </p>
-        </motion.div>
+          </motion.p>
+        </ScrollReveal>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto" staggerDelay={0.1}>
           {sectors.map((sector, index) => (
-            <motion.div
-              key={sector.title}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group"
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
-            >
-              <InteractiveCard className="h-full">
-                <motion.div 
-                  className={`rounded-2xl p-6 bg-card border ${sector.borderColor} h-full transition-all duration-300`}
-                  animate={{
-                    boxShadow: hoveredIndex === index ? sector.hoverGlow : '0 0 0 transparent',
-                    borderColor: hoveredIndex === index ? 'hsl(var(--primary) / 0.6)' : undefined,
-                  }}
-                >
+            <StaggerItem key={sector.title}>
+              <motion.div
+                className="group h-full"
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
+                whileHover={{ y: -10, scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                <InteractiveCard className="h-full">
                   <motion.div 
-                    className={`w-12 h-12 rounded-xl ${sector.bgColor} border ${sector.borderColor} flex items-center justify-center mb-4`}
-                    whileHover={{ rotate: 360, scale: 1.1 }}
-                    transition={{ duration: 0.5 }}
+                    className={`rounded-2xl p-6 bg-card border ${sector.borderColor} h-full transition-all duration-300`}
+                    animate={{
+                      boxShadow: hoveredIndex === index ? sector.hoverGlow : '0 0 0 transparent',
+                    }}
                   >
-                    <sector.icon className={`w-6 h-6 ${sector.color}`} />
+                    <motion.div 
+                      className={`w-12 h-12 rounded-xl ${sector.bgColor} border ${sector.borderColor} flex items-center justify-center mb-4`}
+                      whileHover={{ rotate: 360, scale: 1.15 }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      <sector.icon className={`w-6 h-6 ${sector.color}`} />
+                    </motion.div>
+                    <h3 className="font-display text-lg font-semibold mb-2 text-foreground group-hover:text-primary transition-colors">
+                      {sector.title}
+                    </h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      {sector.description}
+                    </p>
                   </motion.div>
-                  <h3 className="font-display text-lg font-semibold mb-2 text-foreground group-hover:text-primary transition-colors">
-                    {sector.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {sector.description}
-                  </p>
-                </motion.div>
-              </InteractiveCard>
-            </motion.div>
+                </InteractiveCard>
+              </motion.div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   );
