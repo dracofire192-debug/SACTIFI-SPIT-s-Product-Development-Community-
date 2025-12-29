@@ -1,7 +1,6 @@
-import { Suspense, lazy, useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-
-const Spline = lazy(() => import('@splinetool/react-spline'));
+import { RobotScene } from './RobotScene';
 
 const robotMessages = [
   { main: "Innovate boldly.", sub: "Collaborate widely.", sub2: "Ship relentlessly." },
@@ -61,16 +60,7 @@ export const LaptopDisplay = () => {
             {/* Right 3D Content */}
             <div className="w-full md:w-1/2 relative h-64 md:h-auto">
               <div className="relative w-full h-full overflow-hidden">
-                <Suspense fallback={
-                  <div className="w-full h-full flex items-center justify-center bg-secondary/50">
-                    <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-                  </div>
-                }>
-                  <Spline
-                    scene="https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode"
-                    className="w-full h-full"
-                  />
-                </Suspense>
+                <RobotScene />
               </div>
 
               {/* Robot Speech Bubble */}
