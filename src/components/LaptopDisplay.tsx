@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { motion } from 'framer-motion';
-import { RobotScene } from './RobotScene';
+import Spline from '@splinetool/react-spline';
 
 const robotMessages = [
   { main: "Innovate boldly.", sub: "Collaborate widely.", sub2: "Ship relentlessly." },
@@ -60,7 +60,9 @@ export const LaptopDisplay = () => {
             {/* Right 3D Content */}
             <div className="w-full md:w-1/2 relative h-64 md:h-auto">
               <div className="relative w-full h-full overflow-hidden">
-                <RobotScene />
+                <Suspense fallback={<div className="w-full h-full flex items-center justify-center text-foreground/50">Loading 3D...</div>}>
+                  <Spline scene="https://prod.spline.design/UbM7F-HZcyTbZ4y3/scene.splinecode" className="w-full h-full" />
+                </Suspense>
               </div>
 
               {/* Robot Speech Bubble */}
